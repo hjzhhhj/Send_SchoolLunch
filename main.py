@@ -101,10 +101,10 @@ if platform.system() == "Darwin":
     home_key = ('option', 'up')
 
 if __name__ == "__main__":
-    params = {"SCHUL_NM": "미림마이스터고등학교"}
-    SchoolApi.schoolinfo.update(params)  # 클래스 변수 업데이트
-    data = SchoolApi().get_data()  # 객체 생성 후 메서드 호출
-    SchoolApi("schoolInfo", params).get_school_info()
+    params = {
+        "SCHUL_NM": "미림마이스터고등학교"
+    }
+    data = SchoolApi("schoolInfo", params).get_data()
     msg=""
 
     params = {"MLSV_YMD": dt.now().strftime("%Y%m%d")}

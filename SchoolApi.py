@@ -2,15 +2,17 @@ import requests
 import json
 
 class SchoolApi:
-
     params = {
         "KEY": "bea2b7358e3945d6a13530831ea0fa23",
         "Type": "json",
     }
 
     schoolinfo = {}
-
     base_url = "https://open.neis.go.kr/hub/"
+
+    def __init__(self, sub_url, params={}):
+        self.sub_url = sub_url
+        self.params = params
 
     def get_data(self):
         URL = SchoolApi.base_url + self.sub_url
@@ -27,16 +29,17 @@ class SchoolApi:
         except:
             print("찾는 데이터가 없습니다.")
             return response.text
-        
+
+    # 급식 정보를 가져오는 메서드
     def meal(self):
         data = self.get_data()
         try:
-            string = "<조식>\n"+data[0]["DDISH_NM"].replace("<br/>", "\n")+"\n\n"
-            string+= "<중식>\n"+data[1]["DDISH_NM"].replace("<br/>", "\n")+"\n\n"
+            string = "<조식>\n" + data[0]["DDISH_NM"].replace("<br/>", "\n") + "\n\n"
+            string += "<중식>\n" + data[1]["DDISH_NM"].replace("<br/>", "\n") + "\n\n"
             string += "<석식>\n" + data[2]["DDISH_NM"].replace("<br/>", "\n")
             characters = "1234567890./-*"
             for x in range(len(characters)):
-                string = string.replace(characters[x],"")
+                string = string.replace(characters[x], "")
             return string
         except:
             return "오늘은 급식이 없습니다."
