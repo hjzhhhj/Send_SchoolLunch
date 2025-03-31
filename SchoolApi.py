@@ -27,3 +27,16 @@ class SchoolApi:
         except:
             print("찾는 데이터가 없습니다.")
             return response.text
+        
+    def meal(self):
+        data = self.get_data()
+        try:
+            string = "<조식>\n"+data[0]["DDISH_NM"].replace("<br/>", "\n")+"\n\n"
+            string+= "<중식>\n"+data[1]["DDISH_NM"].replace("<br/>", "\n")+"\n\n"
+            string += "<석식>\n" + data[2]["DDISH_NM"].replace("<br/>", "\n")
+            characters = "1234567890./-*"
+            for x in range(len(characters)):
+                string = string.replace(characters[x],"")
+            return string
+        except:
+            return "오늘은 급식이 없습니다."
