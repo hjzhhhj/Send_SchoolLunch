@@ -29,17 +29,30 @@ class SchoolApi:
         except:
             print("찾는 데이터가 없습니다.")
             return response.text
+        
+    def get_school_info(self):
+        data = self.get_data()
+
+        SchoolApi.schoolinfo = {
+            "ATPT_OFCDC_SC_CODE": data["ATPT_OFCDC_SC_CODE"],
+            "SD_SCHUL_CODE": data["SD_SCHUL_CODE"]
+        }
 
     # 급식 정보를 가져오는 메서드
     def meal(self):
         data = self.get_data()
+        if not data:
+            return "급식 정보를 가져올 수 없습니다."
         try:
-            string = "<조식>\n" + data[0]["DDISH_NM"].replace("<br/>", "\n") + "\n\n"
-            string += "<중식>\n" + data[1]["DDISH_NM"].replace("<br/>", "\n") + "\n\n"
+            string = "<조식>\n"+data[0]["DDISH_NM"].replace("<br/>", "\n")+"\n\n"
+            string+= "<중식>\n"+data[1]["DDISH_NM"].replace("<br/>", "\n")+"\n\n"
             string += "<석식>\n" + data[2]["DDISH_NM"].replace("<br/>", "\n")
             characters = "1234567890./-*"
             for x in range(len(characters)):
-                string = string.replace(characters[x], "")
+                string = string.replace(characters[x],"")
             return string
-        except:
-            return "오늘은 급식이 없습니다."
+        except Exception as e:
+            print(f"Error: {e}")
+            return "급식 정보 처리 중 오류가 발생했습니다."
+
+

@@ -104,7 +104,7 @@ if __name__ == "__main__":
     params = {
         "SCHUL_NM": "미림마이스터고등학교"
     }
-    data = SchoolApi("schoolInfo", params).get_data()
+    SchoolApi("schoolInfo", params).get_school_info()
     msg=""
 
     params = {"MLSV_YMD": dt.now().strftime("%Y%m%d")}
