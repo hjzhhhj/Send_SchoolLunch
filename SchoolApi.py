@@ -3,7 +3,7 @@ import json
 
 class SchoolApi:
     params = {
-        "KEY": "bea2b7358e3945d6a13530831ea0fa23",
+        "KEY": "-",
         "Type": "json",
     }
 
