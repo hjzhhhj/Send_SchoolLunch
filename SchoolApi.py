@@ -1,9 +1,10 @@
 import requests
 import json
+import os
 
 class SchoolApi:
     params = {
-        "KEY": "-",
+        "KEY": os.getenv("NEIS_API_KEY"),
         "Type": "json",
     }
 
