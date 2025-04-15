@@ -108,7 +108,7 @@ if __name__ == "__main__":
     msg=""
 
     params = {"MLSV_YMD": dt.now().strftime("%Y%m%d")}
-    msg+="[🍽 오늘의 급식 - 4월 15일 (월)]\n\n"
+    msg+="[ 🍽 오늘의 급식 ]\n\n"
     msg+=SchoolApi("mealServiceDietInfo", params).meal()
     talk_result = talk_check(msg)
     if talk_result:
