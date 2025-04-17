@@ -42,18 +42,31 @@ class SchoolApi:
     # 급식 정보를 가져오는 메서드
     def meal(self):
         data = self.get_data()
-        if not data:
+        if not data or not isinstance(data, list):
             return "급식 정보를 가져올 수 없습니다."
+
         try:
-            string = "<조식>\n"+data[0]["DDISH_NM"].replace("<br/>", "\n")+"\n\n"
-            string+= "<중식>\n"+data[1]["DDISH_NM"].replace("<br/>", "\n")+"\n\n"
-            string += "<석식>\n" + data[2]["DDISH_NM"].replace("<br/>", "\n")
+            meal_map = {
+                "1": "<조식>",
+                "2": "<중식>",
+                "3": "<석식>"
+            }
+
+            result = ""
             characters = "1234567890./-*"
-            for x in range(len(characters)):
-                string = string.replace(characters[x],"")
-            return string
+
+            for meal in data:
+                meal_name = meal_map.get(meal.get("MMEAL_SC_CODE", ""), "")
+                dish = meal.get("DDISH_NM", "").replace("<br/>", "\n")
+
+                # 특수문자 제거
+                for c in characters:
+                    dish = dish.replace(c, "")
+
+                if meal_name and dish:
+                    result += f"{meal_name}\n{dish}\n\n"
+
+            return result.strip() if result else "오늘은 급식이 없습니다."
         except Exception as e:
             print(f"Error: {e}")
             return "급식 정보 처리 중 오류가 발생했습니다."
-
-
