@@ -39,9 +39,13 @@ class SchoolApi:
             "SD_SCHUL_CODE": data["SD_SCHUL_CODE"]
         }
 
-    # 급식 정보를 가져오는 메서드
     def meal(self):
         data = self.get_data()
+
+    # 여기서 dict 하나만 있을 경우 list로 바꿔줌
+        if isinstance(data, dict):
+            data = [data]
+
         if not data or not isinstance(data, list):
             return "급식 정보를 가져올 수 없습니다."
 
@@ -59,7 +63,6 @@ class SchoolApi:
                 meal_name = meal_map.get(meal.get("MMEAL_SC_CODE", ""), "")
                 dish = meal.get("DDISH_NM", "").replace("<br/>", "\n")
 
-                # 특수문자 제거
                 for c in characters:
                     dish = dish.replace(c, "")
 
